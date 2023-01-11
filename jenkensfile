@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('File exist') {
+            steps {
+               fileExists '.vscode/tasks.json'
+            }
+        }
+        stage('Error check') {
+            steps {
+               catchError(message: 'Error Check!!!') {
+    // some block
+}
+            }  
+        }
+        stage('Check out') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/walkietalky/contact-manager-frontend.git']])
+            }
+        }
+   }
+}
